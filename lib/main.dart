@@ -1,4 +1,7 @@
+import 'package:db_practice/counter_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path/path.dart';
 
 void main() {
   runApp(MyMain());
@@ -8,7 +11,10 @@ class MyMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Dashboard(),
+      home: BlocProvider(
+        create: (context) => CounterCubit(),
+        child: Dashboard(),
+      ),
     );
   }
 }
@@ -21,13 +27,7 @@ class Dashboard extends StatefulWidget {
 int count = 0;
 
 class _DashboardState extends State<Dashboard> {
-  void mCounters() {
-    count++;
-
-    setState(() {
-      
-    });
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +39,15 @@ class _DashboardState extends State<Dashboard> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Text("#: $count"),
+            child: Text("#: ${context.watch<CounterCubit>().state}"),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton.large(
         onPressed: () {
-          mCounters();
+          context.read<CounterCubit>().incrementCount();
+                               //or
+          // BlocProvider.of<CounterCubit>(context , listen: false).incrementCount();
         },
         child: Text("ok"),
       ),
