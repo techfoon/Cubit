@@ -62,9 +62,8 @@ class _MyAppDashState extends State<MyAppDash> {
                       ),
                       trailing: IconButton(
                           onPressed: () {
-                            mainDB!.deleteNotes(
+                            context.read<CrudCubit>().deleteNotes(
                                 rowIndex: state.mNotes[index][DBHelper.s_no]);
-                           
                           },
                           icon: Icon(Icons.delete)),
                       title: Text(state.mNotes[index][DBHelper.Columntitle]),
@@ -141,7 +140,7 @@ class _MyAppDashState extends State<MyAppDash> {
               : Text("no notes found");
         }
 
-        return Container( );
+        return Container();
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -239,26 +238,9 @@ class _MyAppDashState extends State<MyAppDash> {
     var updateFormTitle = updateTitleController.text.trim();
     var updateFormDescription = updateDescriptionController.text.trim();
 
-    // Update the note in the database
-    bool check = await mainDB!.updateNotes(
+    context.read<CrudCubit>().updateNotes(
         rowIndex: updateIndex,
-        rowTitle: updateFormTitle,
+        rowTitile: updateFormTitle,
         rowDescription: updateFormDescription);
-
-    // Prepare a message based on the success/failure of the update
-    String msg;
-    if (check) {
-    
-      msg = "Note update successfully";
-    } else {
-      msg = "Note updated failed";
-      // Reload the notes after a successful update
-    }
-
-    // Show a snackbar with the appropriate message
-    if (context.mounted) {
-      // Ensure context is still valid
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
-    }
   }
 }

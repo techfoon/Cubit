@@ -18,7 +18,6 @@ class CrudCubit extends Cubit<NotesState> {
   }
 
   void addmNotes({required String cTitle, required String cDescription}) async {
-
     //action
     emit(NotesLoadingState());
 
@@ -35,11 +34,40 @@ class CrudCubit extends Cubit<NotesState> {
     }
   }
 
-  bool updateNotes() {
-    return true;
+  void updateNotes(
+      {required int rowIndex,
+      required String rowTitile,
+      required String rowDescription}) async {
+    emit(NotesLoadingState());
+
+    var check = await mainDB.updateNotes(
+        rowIndex: rowIndex,
+        rowTitle: rowTitile,
+        rowDescription: rowDescription);
+
+    if (check) {
+      log("notes updated");
+      var notes = await mainDB.getAllNotes();
+      //facting and reInform
+      emit(NotesLoadedState(mNotes: notes));
+    } else {
+      log("updated failed");
+      emit(NotesErrorState(errorMsg: "updated failed"));
+    }
   }
 
-  bool deleteNotes() {
-    return true;
+  void deleteNotes({required int rowIndex}) async{
+    emit(NotesLoadingState());
+    var check =  await mainDB.deleteNotes(rowIndex: rowIndex);
+
+       if (check) {
+      log("notes updated");
+      var notes = await mainDB.getAllNotes();
+      //facting and reInform
+      emit(NotesLoadedState(mNotes: notes));
+    } else {
+      log("updated failed");
+      emit(NotesErrorState(errorMsg: "updated failed"));
+    }
   }
 }
