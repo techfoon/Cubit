@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:developer'; // for creating logs
+import 'package:db_practice/model.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -58,10 +59,10 @@ class DBHelper {
 
   
   ///insert
-  Future<bool> addNote({required String title, required String desc}) async {
+  Future<bool> addNote({required NoteModel newNote}) async {
     var db = await getDb();
     int rowsEffected = await db
-        .insert(notesDataTable, {Columntitle: title, columndescription: desc});
+        .insert(notesDataTable, {Columntitle: newNote.Model_title, columndescription: newNote.Model_description});
 
     stdout.write("method is called return: $rowsEffected");
     log("Data is Inserted");

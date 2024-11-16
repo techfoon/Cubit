@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:db_practice/cubits/notes_state.dart';
 import 'package:db_practice/data/local/db_helper.dart';
+import 'package:db_practice/model.dart';
 
 class CrudCubit extends Cubit<NotesState> {
   DBHelper mainDB;
@@ -17,11 +18,11 @@ class CrudCubit extends Cubit<NotesState> {
     emit(NotesLoadedState(mNotes: notes));
   }
 
-  void addmNotes({required String cTitle, required String cDescription}) async {
+  void addmNotes({required NoteModel newNote}) async {
     //action
     emit(NotesLoadingState());
 
-    var check = await mainDB.addNote(title: cTitle, desc: cDescription);
+    var check = await mainDB.addNote(newNote:newNote);
 
     if (check) {
       log("notes added");

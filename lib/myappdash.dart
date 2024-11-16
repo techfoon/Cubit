@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'model.dart';
 
 import 'package:db_practice/cubits/crudcubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -213,7 +214,7 @@ class _MyAppDashState extends State<MyAppDash> {
 
     context
         .read<CrudCubit>()
-        .addmNotes(cTitle: formTitle, cDescription: formDescription);
+        .addmNotes(newNote: NoteModel(Model_title: formTitle, Model_description: formDescription) );
 
     //Navigator.pop(context);
 
