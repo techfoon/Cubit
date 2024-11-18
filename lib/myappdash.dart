@@ -212,9 +212,9 @@ class _MyAppDashState extends State<MyAppDash> {
     var formTitle = titleController.text.toString();
     var formDescription = descriptionController.text.toString();
 
-    context
-        .read<CrudCubit>()
-        .addmNotes(newNote: NoteModel(Model_title: formTitle, Model_description: formDescription) );
+    context.read<CrudCubit>().addmNotes(
+        newNote: NoteModel(
+            Model_title: formTitle, Model_description: formDescription));
 
     //Navigator.pop(context);
 
@@ -241,7 +241,8 @@ class _MyAppDashState extends State<MyAppDash> {
 
     context.read<CrudCubit>().updateNotes(
         rowIndex: updateIndex,
-        rowTitile: updateFormTitle,
-        rowDescription: updateFormDescription);
+        newNote: NoteModel(
+            Model_title: updateFormTitle,
+            Model_description: updateFormDescription));
   }
 }

@@ -88,15 +88,14 @@ class DBHelper {
 
   Future<bool> updateNotes({
     required int rowIndex,
-    required String rowTitle,
-    required String rowDescription,
+   required NoteModel newNote
   }) async {
     var db = await getDb();
 
     // Use rawUpdate for update operations
     int updatedCount = await db.rawUpdate(
         "UPDATE $notesDataTable SET $Columntitle = ?, $columndescription = ? WHERE s_no = ?",
-        [rowTitle, rowDescription, rowIndex]);
+        [newNote.Model_title, newNote.Model_description, rowIndex]);
 
     return updatedCount > 0; // Returns the number of rows affected
   }

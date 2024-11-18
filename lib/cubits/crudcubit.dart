@@ -37,14 +37,10 @@ class CrudCubit extends Cubit<NotesState> {
 
   void updateNotes(
       {required int rowIndex,
-      required String rowTitile,
-      required String rowDescription}) async {
+      required NoteModel newNote}) async {
     emit(NotesLoadingState());
 
-    var check = await mainDB.updateNotes(
-        rowIndex: rowIndex,
-        rowTitle: rowTitile,
-        rowDescription: rowDescription);
+    var check = await mainDB.updateNotes(rowIndex: rowIndex, newNote: newNote);
 
     if (check) {
       log("notes updated");
